@@ -10,10 +10,11 @@ const users = createSlice({
       password: "",
     },
   ],
+  //actions
   reducers: {
     getUsersSlice: (state, action) => {
       state = action.payload;
-      return state;
+      return action.payload;
     },
     addUsersSlice: (state, action) => {
       console.log(action.payload);

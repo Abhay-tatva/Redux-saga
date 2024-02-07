@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import { DELETE_USER_BY_ID, GET_USERS } from "../redux/types";
 
 export default function MyTable() {
-  const rows = useSelector((state) => state.users);
+  const rows = useSelector((state) => state.persistedReducer.users);
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch({ type: GET_USERS });
@@ -42,7 +42,10 @@ export default function MyTable() {
               <TableCell align="right">{row.password}</TableCell>
               <TableCell align="right">
                 <Button
-                  onClick={() => dispatch(setUserSlice(row))}
+                  onClick={() => {
+                    if (window.confirm("are you sure want to edit this item ?"))
+                      dispatch(setUserSlice(row));
+                  }}
                   fullWidth
                   variant="contained"
                 >
@@ -51,9 +54,12 @@ export default function MyTable() {
               </TableCell>
               <TableCell align="right">
                 <Button
-                  onClick={() =>
-                    dispatch({ type: DELETE_USER_BY_ID, id: row.id })
-                  }
+                  onClick={() => {
+                    if (
+                      window.confirm("are you sure want to delete this item ?")
+                    )
+                      dispatch({ type: DELETE_USER_BY_ID, id: row.id });
+                  }}
                   fullWidth
                   variant="contained"
                 >
